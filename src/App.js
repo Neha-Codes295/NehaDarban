@@ -1,38 +1,67 @@
-import React, { useState } from "react";
-import "./App.css";
-import EmojiPicker from "./components/EmojiPicker";
-import GameBoard from "./components/GameBoard";
-import ScoreBoard from "./components/ScoreBoard";
+import React, { useState, useEffect } from "react";
+import Board from "./components/Board";
+import EmojiSelector from "./components/EmojiSelector";
+import Leaderboard from "./components/Leaderboard";
+import Help from "./components/Help";
+import DarkModeToggle from "./components/DarkModeToggle";
+import confetti from "./confetti";
+
+const emojiThemes = {
+  Animals: ["🐶", "🐱", "🐭", "🐰"],
+  Food: ["🍕", "🍟", "🍔", "🍩"],
+  Sports: ["⚽️", "🏀", "🏈", "🎾"],
+  Faces: ["😃", "😎", "🤓", "🥳"],
+};
 
 export default function App() {
-  const [playerEmojis, setPlayerEmojis] = useState({ player1: [], player2: [] });
+  const [darkMode, setDarkMode] = useState(false);
+  const [themes, setThemes] = useState({});
   const [gameStarted, setGameStarted] = useState(false);
-  const [scores, setScores] = useState({ player1: 0, player2: 0 });
+  const [winner, setWinner] = useState(null);
 
-  const handleStartGame = (p1, p2) => {
-    setPlayerEmojis({ player1: p1, player2: p2 });
+  useEffect(() => {
+    document.body.className = darkMode ? "dark" : "";
+  }, [darkMode]);
+
+  const handleThemeSelect = (p1, p2) => {
+    setThemes({ 1: p1, 2: p2 });
     setGameStarted(true);
   };
 
-  const handleGameWon = (winner) => {
-    setScores((prev) => ({ ...prev, [winner]: prev[winner] + 1 }));
+  const handleWin = (player) => {
+    confetti();
+    setWinner(player);
+  };
+
+  const resetGame = () => {
+    setWinner(null);
+    setGameStarted(false);
   };
 
   return (
-    <div className="app-container">
-      <h1>Blink Tac Toe 🎮</h1>
+    <div className="app">
+      <h1>Blink Tac Toe</h1>
+      <DarkModeToggle toggle={() => setDarkMode(!darkMode)} darkMode={darkMode} />
       {!gameStarted ? (
-        <EmojiPicker onStart={handleStartGame} />
+        <EmojiSelector emojiThemes={emojiThemes} onStart={handleThemeSelect} />
       ) : (
         <>
-          <ScoreBoard scores={scores} />
-          <GameBoard
-            playerEmojis={playerEmojis}
-            onGameWon={handleGameWon}
-            onRestart={() => setGameStarted(false)}
+          <Board
+            themes={themes}
+            onWin={handleWin}
+            disabled={!!winner}
           />
+          {winner && (
+            <>
+              <h2>Player {winner} Wins!</h2>
+              <button onClick={resetGame}>Play Again</button>
+            </>
+          )}
         </>
       )}
+      <Leaderboard />
+      <Help />
     </div>
   );
 }
+  
