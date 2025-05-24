@@ -1,47 +1,53 @@
-.App {
-  text-align: center;
-  padding: 20px;
+.app-container {
   font-family: sans-serif;
+  text-align: center;
+  padding: 1rem;
 }
 
-.grid {
+.board {
   display: grid;
   grid-template-columns: repeat(3, 80px);
-  grid-template-rows: repeat(3, 80px);
   gap: 10px;
   justify-content: center;
-  margin: 20px auto;
+  margin: 1rem auto;
 }
 
 .cell {
+  width: 80px;
+  height: 80px;
   background: #f0f0f0;
-  font-size: 36px;
-  line-height: 80px;
-  border-radius: 8px;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.3s ease;
 }
 
-.cell:hover {
-  transform: scale(1.1);
-  background-color: #e0e0e0;
+.cell.filled:hover {
+  cursor: not-allowed;
 }
 
-button {
-  padding: 10px 20px;
-  margin-top: 20px;
-  font-size: 16px;
-  cursor: pointer;
+.emoji {
+  animation: pop 0.3s ease;
 }
 
-.setup select {
-  margin: 10px;
+@keyframes pop {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
-.help {
-  margin-top: 30px;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
+.restart {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+}
+
+.emoji-picker select {
+  margin: 0.5rem;
+}
+
+.scoreboard {
+  margin: 1rem;
+  font-weight: bold;
 }

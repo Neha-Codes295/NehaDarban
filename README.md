@@ -29,4 +29,10 @@ Each player has a queue of last 3 positions. On 4th move, oldest is removed, unl
 - Highlight winning emojis
 
 ## 🔗 Live Demo
-<!-- [https://your-deploy-link.vercel.app](https://your-deploy-link.vercel.app) -->
+[https://neha-darban.vercel.app/](https://your-deploy-link.vercel.app)
+
+
+
+## 🧠 Author
+
+👩‍💻 Neha – [@yourgithub](https://github.com/Neha-Codes295/NehaDarban)
